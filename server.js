@@ -12,12 +12,8 @@ const flash = require('express-flash')
 
 dbConnect();
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.set('view-engine', 'ejs')
-app.use(express.static(path.join(__dirname,'public')))
-app.use(flash())
 app.use(session({
+    cookie: { maxAge: 600000 },
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
@@ -25,6 +21,18 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.set('view-engine', 'ejs')
+app.use(express.static(path.join(__dirname,'public')))
+app.use(flash())
+app.use((req, res, next) => {
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+    res.setHeader("Pragma", "no-cache"); 
+    res.setHeader("Expires", "0"); 
+    next()
+})
 
 
 
