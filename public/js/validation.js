@@ -3,24 +3,22 @@ const email = document.getElementById('email') || 1;
 const password = document.getElementById('password') || 1;
 const confirmpassword = document.getElementById('confirmpassword') || 1;
 const form = document.getElementById('form');
-const errorElement = document.getElementById('errorElement');
-let emailValid=true;
-console.log(form);
+
 
 form.addEventListener('submit',(e)=>{
     let errmessage = [];
    
 
-    if(name1!=1 || name1.value==='' || name1.value===null){
+    if(name1!=1 && name1.value==='' || name1.value===null){
         errmessage.push("Name is required");
     }
-    if(password!=1 || password.value==='' || password.value===null){
+    if(password!=1 && password.value==='' || password.value===null){
         errmessage.push("Password required")
     }
     if(!emailValid || email.value=='' ||email.value==null){
         errmessage.push("Email Required")
     }
-    if(confirmpassword!=1 || confirmpassword!=password){
+    if(confirmpassword!=1 && confirmpassword.value!=password.value){
         errmessage.push("Password don't match")
     }
 
