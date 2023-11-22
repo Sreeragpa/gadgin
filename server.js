@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 4000;
 const path = require('path')
 const userRoutes = require('./routes/userRoutes')
 const authRoutes = require('./routes/authRoutes')
+const adminRoutes= require('./routes/adminRoutes')
 const passport = require('./configs/passport-config');
 const session = require('express-session')
 const flash = require('express-flash')
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
 
 app.use('/',userRoutes)
 app.use('/',authRoutes)
+app.use('/admin',adminRoutes);
 
 
 app.listen(PORT,()=>{
