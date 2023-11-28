@@ -34,14 +34,12 @@ exports.getProducts = async (req, res) => {
 
 }
 
-exports.unlistedProd = async(req,res)=>{
+exports.unlistedProd = async (req, res) => {
     const unlistedproducts = await UnlistedProductdb.find();
     res.send(unlistedproducts)
 }
 
 exports.addProducts = async (req, res) => {
-
-
     const files = req.files;
     imag = files.map((file) => {
         return "/uploads/" + file.filename
@@ -67,8 +65,8 @@ exports.addProducts = async (req, res) => {
 
 }
 
-exports.addProductsfromUnlisted = async(req,res)=>{
-    const id = req.params.id; 
+exports.addProductsfromUnlisted = async (req, res) => {
+    const id = req.params.id;
     const productToMove = await UnlistedProductdb.findById(id);
     const newProduct = new Productdb({
         name: productToMove.name,
@@ -87,13 +85,13 @@ exports.addProductsfromUnlisted = async(req,res)=>{
     res.redirect('/admin/productmgmt')
 }
 
-exports.addategoryFromUnlisted = async(req,res)=>{
+exports.addategoryFromUnlisted = async (req, res) => {
     const id = req.params.id;
     const categoryToMove = await UnlistedCategorydb.findById(id)
 
     const newCate = new Categorydb({
-        categoryName:categoryToMove.categoryName,
-        images:categoryToMove.images
+        categoryName: categoryToMove.categoryName,
+        images: categoryToMove.images
     })
     await newCate.save()
     await UnlistedCategorydb.findByIdAndDelete(id)
@@ -101,21 +99,47 @@ exports.addategoryFromUnlisted = async(req,res)=>{
 }
 
 exports.editProducts = async (req, res) => {
-    id = req.body.id;
-    console.log(req.body.id);
-    updatedProduct = await Productdb.findByIdAndUpdate({ _id: id }, {
-        $set: {
-            name: req.body.name,
-            mrp: req.body.mrp,
-            price: req.body.price,
-            discount: req.body.discount,
-            category: req.body.category,
-            description: req.body.description,
-            brand: req.body.brand,
-            color: req.body.color,
-            quantity: req.body.quantity,
-        }
-    }, { new: true })
+    id = req.params.id;
+    const files = req.files;
+    let imag;
+    if (files) {
+        imag = files.map((file) => {
+            return "/uploads/" + file.filename
+        })
+        
+    }
+
+
+    // updatedProduct = await Productdb.findByIdAndUpdate({ _id: id }, {
+    //     $set: {
+    //         name: req.body.name,
+    //         mrp: req.body.mrp,
+    //         price: req.body.price,
+    //         discount: req.body.discount,
+    //         category: req.body.category,
+    //         description: req.body.description,
+    //         brand: req.body.brand,
+    //         color: req.body.color,
+    //         quantity: req.body.quantity,
+    //         images:imag
+    //     }
+    // }, { new: true })
+
+    let updateFields = {
+        name: req.body.name,
+        mrp: req.body.mrp,
+        price: req.body.price,
+        discount: req.body.discount,
+        category: req.body.category,
+        description: req.body.description,
+        brand: req.body.brand,
+        color: req.body.color,
+        quantity: req.body.quantity
+    };
+    if (imag && imag.length > 0) {
+        await Productdb.findByIdAndUpdate({ _id: id }, { $push: { images: imag } }, { new: true });
+    }
+    updatedProduct = await Productdb.findByIdAndUpdate({ _id: id }, { $set: updateFields }, { new: true });
     res.redirect('/admin/productmgmt')
 }
 
@@ -140,7 +164,7 @@ exports.deleteProducts = async (req, res) => {
         product = await unlistedProduct.save()
         // await UnlistedProductdb.create(productToMove);
         const deletesuccess = await Productdb.findByIdAndDelete(id);
-        
+
         if (deletesuccess) {
             res.status(200).redirect('/admin/productmgmt');
         } else {
@@ -159,8 +183,8 @@ exports.deleteCategory = async (req, res) => {
     try {
         const productToMove = await Categorydb.findById(id);
         const newCate = new UnlistedCategorydb({
-            categoryName:productToMove.categoryName,
-            images:productToMove.images
+            categoryName: productToMove.categoryName,
+            images: productToMove.images
         })
         await newCate.save()
 
@@ -177,4 +201,25 @@ exports.deleteCategory = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 
+}
+
+
+exports.deleteImage = async (req, res) => {
+    const productid = req.query.pid;
+    const index = req.query.index;
+
+    try {
+        // const updatedImg = await Productdb.findByIdAndUpdate(productid,{$unset:{[`images.${index}`]:1}},{new:true})
+        // Remove the element at the specified index
+        const product = await Productdb.findById(productid);
+        product.images.splice(index, 1);
+
+       
+        const updatedProduct = await product.save();
+        const category = await Categorydb.find()
+        res.render('admineditproductform.ejs', { product: updatedProduct ,categories:category})
+    }
+    catch (err) {
+        console.log(err);
+    }
 }

@@ -41,7 +41,8 @@ var userSchema = new mongoose.Schema({
         {
             type: String,
         }
-    ]
+    ],
+
 
 })
 

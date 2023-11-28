@@ -55,3 +55,20 @@ exports.updatepass = async (req, res) => {
         res.status(500).send(err);
     }
 };
+
+exports.getuser = async(req,res)=>{
+    const users = await Userdb.find()
+    res.send(users)
+}
+
+exports.block = async(req,res)=>{
+    const id = req.params.id;
+    const user = await Userdb.findById(id);
+    const result = await Userdb.findByIdAndUpdate({_id:id},{$set:{blocked:true}},{new:true})
+    res.redirect('/admin/usermgmt')
+}
+exports.unblock = async(req,res)=>{
+    const id = req.params.id;
+    const result = await Userdb.findByIdAndUpdate({_id:id},{$set:{blocked:false}},{new:true})
+    res.redirect('/admin/usermgmt')
+}

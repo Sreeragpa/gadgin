@@ -18,6 +18,14 @@ var userSchema = new mongoose.Schema({
         type:Number,
         required:true,
         unique:true
+    },
+    blocked:{
+        type:String,
+        default:false
+    },
+    status:{
+        type:String,
+        default:'inactive'
     }
 })
 
