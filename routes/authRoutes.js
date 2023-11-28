@@ -6,7 +6,9 @@ route.post("/login",passport.authenticate('local',{
     successRedirect:'/',
     failureRedirect:'/login',
     failureFlash:true
-}))
+}),(req,res)=>{
+    console.log('Login succcesfully');
+})
 
 
 

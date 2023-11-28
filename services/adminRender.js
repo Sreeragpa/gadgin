@@ -31,3 +31,16 @@ exports.logout = (req,res)=>{
     });
 
 }
+
+exports.usermgmt = (req,res)=>{
+    axios.get(`http://localhost:3001/api/getusers`)
+        .then((response)=>{
+            res.render('adminusermgmt.ejs',{users:response.data})
+        })
+        .catch((err)=>{
+            res.send("Usermgmt error")
+        })
+    
+}
+
+

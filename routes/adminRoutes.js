@@ -13,7 +13,8 @@ route.get('/productmgmt/unlisted',productRender.Unlistedproductmanagement)
 route.get('/addproduct',productRender.addproductform)
 route.get('/addcategory',productRender.addCategory)
 route.get('/categorymgmt',productRender.categoryManagement)
-route.get('/categorymgmt/unlisted',productRender.unlistedCategorymgmt)
+route.get('/categorymgmt/unlisted',adminAuthenticated,productRender.unlistedCategorymgmt)
+route.get('/usermgmt',adminRender.usermgmt)
 
 
 

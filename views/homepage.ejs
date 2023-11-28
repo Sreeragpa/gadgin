@@ -105,11 +105,15 @@
                     </div>
                 </a>
                 <% } %>
-             
+  
         
             </div>
-            <!-- <button class="scroll-btnn-left">&lt;</button>
-            <button class="scroll-btnn-right">&gt;</button> -->
+            <div class="left-right-btns">
+                <button class="scroll-btnn-left scroll-btnn" class="scroll-left"><i class="fa-solid fa-arrow-right fa-flip-both" style="color: #000000;"></i></button>
+          <button class="scroll-btnn-right scroll-btnn" class="scroll-left" ><i class="fa-solid fa-arrow-right" style="color: #000000;"></i></button>
+          </div>
+          
+          
         </div>
         <!-- /Featured Products -->
 
@@ -128,8 +132,14 @@
                 </a>
                 <% }%>
 
-                <!-- Add more products as needed -->
             </div>
+            
+                <!-- Scroll Button -->
+                <div class="left-right-btns">
+                    <button class="scroll-btnn-left scroll-btnn"><i class="fa-solid fa-arrow-right fa-flip-both" style="color: #000000;"></i></button>
+              <button class="scroll-btnn-right scroll-btnn"><i class="fa-solid fa-arrow-right" style="color: #000000;"></i></button>
+              </div>
+                <!-- Scroll Button -->
         </div>
         <!-- /Shop By Category -->
 
@@ -164,7 +174,36 @@
 
     </div>
     <!-- /MAIN -->
-
+    <script>
+        // Function to scroll horizontally
+        function scrollHorizontally(amount) {
+          document.body.scrollLeft += amount; // For Safari
+          document.documentElement.scrollLeft += amount; // For Chrome, Firefox, IE, and Opera
+        }
+      
+        // Show the scroll buttons when scrolling
+        window.onscroll = function() {
+          showScrollButtons();
+        };
+      
+        function showScrollButtons() {
+          var scrollLeftButton = document.getElementById("scroll-left");
+          var scrollRightButton = document.getElementById("scroll-right");
+      
+          if (document.body.scrollLeft > 20 || document.documentElement.scrollLeft > 20) {
+            scrollLeftButton.style.display = "block";
+          } else {
+            scrollLeftButton.style.display = "none";
+          }
+      
+          if (document.body.scrollLeft < document.body.scrollWidth - window.innerWidth - 20 ||
+              document.documentElement.scrollLeft < document.documentElement.scrollWidth - window.innerWidth - 20) {
+            scrollRightButton.style.display = "block";
+          } else {
+            scrollRightButton.style.display = "none";
+          }
+        }
+      </script>
 
     <script src="/js/scrolltest.js"></script>
     <!-- Footer -->

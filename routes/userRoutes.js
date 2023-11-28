@@ -4,14 +4,14 @@ const otpCtrl = require('../controllers/otpCtrl')
 const productCtrl = require('../controllers/productsCtrl')
 const productRender = require('../services/productRender')
 const session = require('express-session')
-const { CheckAuthenticated, CheckNotauthenticated } = require('../middlewares/authMiddleware')
+const { CheckAuthenticated, CheckNotauthenticated } = require('../middlewares/authMiddleware');
+const {isBlocked} = require('../middlewares/userBlockMiddleware');
 const userRender=require('../services/userRender')
 const axios = require('axios')
 const store = require('../services/multer');
 const { response } = require('express');
 
-
-route.get('/',userRender.homepage)
+route.get('/',CheckAuthenticated,isBlocked,userRender.homepage)
 route.get('/login', CheckNotauthenticated,userRender.login)
 route.get('/register', CheckNotauthenticated,userRender.register)
 route.get('/forgotpass',CheckNotauthenticated,userRender.forgotpass)
@@ -61,6 +61,9 @@ route.get('/sproduct/:id',(req,res)=>{
         })
 })
 
+route.get('/account',userRender.userAccount)
+
+
 
 
 // route.get('/')
@@ -75,12 +78,16 @@ route.get('/api/getproduct/:id',productCtrl.getProducts )
 route.post('/api/addproducts',store.array('images',4),productCtrl.addProducts )
 route.post('/api/addproductsfromunlisted/:id',productCtrl.addProductsfromUnlisted )
 route.post('/api/addcategoryfromunlisted/:id',productCtrl.addategoryFromUnlisted )
-route.post('/api/editproducts',productCtrl.editProducts )
+route.post('/api/editproducts/:id',store.array('images',4),productCtrl.editProducts )
 route.post('/api/createcategory',store.array('images',1),productRender.createCategory)
 route.get('/api/getcategory',productRender.getCategory)
 route.get('/api/getcategory/unlisted',productRender.getUnlistedCategory)
 route.post('/api/delete/product/:id',productCtrl.deleteProducts)
 route.post('/api/delete/category/:id',productCtrl.deleteCategory)
+route.post('/api/deleteimage',productCtrl.deleteImage)
+route.get('/api/getusers',userCtrl.getuser)
+route.post('/api/user/block/:id',userCtrl.block)
+route.post('/api/user/unblock/:id',userCtrl.unblock)
 
 
 
