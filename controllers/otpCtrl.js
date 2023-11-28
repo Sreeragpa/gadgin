@@ -5,8 +5,10 @@ const Mailgen = require('mailgen');
 // MAIL
 const Otpdb = require('../models/otpVerification')
 const Userdb = require('../models/userModel')
+let fpasss;
 exports.getOtp = async (req, res) => {
     const email = req.body.email;
+    fpasss= req.query.forgotpass;
     if (req.query.forgotpass == 1) {
         const type = 'fpass'
         req.session.fpass = true;
@@ -128,7 +130,9 @@ exports.checkOtp = async (req, res) => {
                     res.render('otpreg.ejs', { messages: { error: "OTP has expired" }, email: email });
 
                 } else if (savedOtp == otp) {
-                    if (req.session.fpass) {
+                    console.log(req.session.fpass);
+                    if (fpasss==1) {
+                        console.log('heheheheheheh');
                         res.render('newpass.ejs', { email: email })
                     } else {
                         res.render('finalreg.ejs', { email: email })
