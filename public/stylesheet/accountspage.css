@@ -1,0 +1,39 @@
+.inner-content-div-user{
+    margin: 0px 50px 50px 50px;
+    padding: 50px;
+    background-color: 1C1C1C;
+}
+body{
+    background-color: black;
+}
+
+.user-details-div{
+    display: flex;
+    width: 100%;
+    gap:10px;
+}
+.user-di{
+    width: 50%;
+}
+.user-profile-details{
+    background-color: black;
+    border-radius: 20px;
+    padding: 30px;
+}
+.user-manage{
+    width: 50%;
+}
+ul {
+    list-style: none;
+    padding: 0; /* Optional: Remove default padding */
+    margin: 0; /* Optional: Remove default margin */
+}
+.style-300{
+    font-weight: 400;
+    font-size: 18px;
+}
+.logout-btnn{
+    background-color: rgb(200, 0, 0);
+    border: none;
+    padding: 4px 8px;
+}

@@ -22,7 +22,7 @@ forms.forEach((form) => {
       });
 
       cancelBtn.addEventListener('click', () => {
-        console.log('User clicked "No"');
+      
         // Close the modal
         overlay.style.display = 'none';
       });
