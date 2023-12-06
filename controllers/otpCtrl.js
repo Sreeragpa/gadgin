@@ -8,7 +8,8 @@ const Userdb = require('../models/userModel')
 let fpasss;
 exports.getOtp = async (req, res) => {
     const email = req.body.email;
-    fpasss= req.query.forgotpass;
+     fpasss= req.query.forgotpass;
+    console.log(fpasss,email);
     if (req.query.forgotpass == 1) {
         const type = 'fpass'
         req.session.fpass = true;
@@ -84,21 +85,31 @@ exports.getOtp = async (req, res) => {
         transporter
             .sendMail(message)
             .then(async () => {
-                const newOtpdb = await new Otpdb({
+                try{
+                const newOtpdb =  await new Otpdb({
                     userId: otp,
                     otp: otp,
                     createdAt: Date.now(),
                     expiresAt: Date.now() + 59000,
                 })
-                await newOtpdb.save()
+                
+                    await newOtpdb.save()
+                }catch(err){
+                    console.error(err);
+                }
+                
+                
                 req.session.email = req.body.email;
-
-                res.redirect('/otpreg')
+                if(type=='fpass'){
+                    res.redirect('/otpregfpass')
+                }else{
+                    res.redirect('/otpreg')
+                }
+                
                 // res.render('otpreg.ejs', { email: req.body.email });
             })
             .catch((error) => {
-                console.log(otp, email);
-                return res.status(500).json({ error });
+                return res.status(500).json({error });
 
             });
     }
@@ -122,7 +133,7 @@ exports.checkOtp = async (req, res) => {
                 if (expiresAt < Date.now()) {
                     try {
                         await Otpdb.deleteOne({ otp: otp });
-                        console.log('Document deleted successfully');
+
                     } catch (error) {
                         console.error('Error deleting document:', error);
                     }
@@ -130,9 +141,7 @@ exports.checkOtp = async (req, res) => {
                     res.render('otpreg.ejs', { messages: { error: "OTP has expired" }, email: email });
 
                 } else if (savedOtp == otp) {
-                    console.log(req.session.fpass);
                     if (fpasss==1) {
-                        console.log('heheheheheheh');
                         res.render('newpass.ejs', { email: email })
                     } else {
                         res.render('finalreg.ejs', { email: email })
@@ -140,7 +149,6 @@ exports.checkOtp = async (req, res) => {
                 }
 
             } else {
-                console.log("OTP ERRORROR");
                 res.render('otpreg.ejs', { messages: { error: "Invalid OTP" }, email: email });
             }
         }

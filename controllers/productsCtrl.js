@@ -4,21 +4,30 @@ const UnlistedProductdb = require('../models/UnlistedproductModel');
 const store = require('../services/multer');
 const Categorydb = require('../models/categoryModel');
 const UnlistedCategorydb = require('../models/UnlistedcategoryModel');
+const fs = require('fs');
+const path = require('path');
+const { log } = require('console');
+const Cartdb = require('../models/cartModel');
 exports.getProducts = async (req, res) => {
     if (req.query.category) {
         const category = req.query.category;
         const products = await Productdb.find({ category: { $regex: new RegExp(category, 'i') } })
         if (products.length === 0) {
-            const nop = false;
+              const nop = false;
             res.send();
         } else {
             res.send(products)
         }
 
     } else if (req.params.id) {
-        const products = await Productdb.findById(req.params.id);
-        res.send(products)
-        // res.render('admineditproductform.ejs',{product:products})
+        try {
+            const id =req.params.id 
+            const response = await Productdb.findById(id)
+            res.send(response)
+        } catch (error) {
+            console.error('Error fetching product from external API:', error.message);
+            res.status(500).send('Internal Server Error');
+        }
     }
     else {
         const products = await Productdb.find();
@@ -33,6 +42,24 @@ exports.getProducts = async (req, res) => {
 
 
 }
+
+exports.singlepdtRender = async (req,res)=>{
+    try {
+        const id =req.params.id ;
+        const userid = req.session.passport?.user;
+        let isInCart=null;
+       
+        const response = await Productdb.findById(req.params.id);
+        if(userid){
+             isInCart = await Cartdb.findOne({userid:userid,'cartitems.productid':id});
+        }
+            res.render('singleproductpage.ejs', { product: response ,isInCart:isInCart});
+        
+    } catch (error) {
+        console.error('Error fetching product from external API:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
+} 
 
 exports.unlistedProd = async (req, res) => {
     const unlistedproducts = await UnlistedProductdb.find();
@@ -209,12 +236,16 @@ exports.deleteImage = async (req, res) => {
     const index = req.query.index;
 
     try {
-        // const updatedImg = await Productdb.findByIdAndUpdate(productid,{$unset:{[`images.${index}`]:1}},{new:true})
-        // Remove the element at the specified index
         const product = await Productdb.findById(productid);
+        const img = product.images[index];
         product.images.splice(index, 1);
-
-       
+        imgfilepath = path.join(__dirname,'../'+'/public'+img)
+        console.log(imgfilepath);
+       fs.unlink(imgfilepath,(err)=>{
+        if(err){
+            console.log(err);
+        }
+       })
         const updatedProduct = await product.save();
         const category = await Categorydb.find()
         res.render('admineditproductform.ejs', { product: updatedProduct ,categories:category})
@@ -222,4 +253,39 @@ exports.deleteImage = async (req, res) => {
     catch (err) {
         console.log(err);
     }
+}
+
+exports.createCategory = async(req,res)=>{
+    cat=req.body.category;
+    cat=cat.toLowerCase();
+
+    const categories = await Categorydb.findOne({categoryName:cat})
+ 
+
+    if(categories){
+        
+        res.render('adminaddcategory.ejs',{messages:{error:"Category Exists"}})
+    }else{
+        const files = req.files;
+        // console.log(files);
+        imag="/uploads/" + files[0].filename;
+        
+        
+        const newCate = new Categorydb({
+            categoryName:cat,
+            images:imag
+        })
+        result=await newCate.save()
+        res.redirect('/admin/categorymgmt')
+    }
+   
+}
+
+exports.getCategory = async(req,res)=>{
+    const categories = await Categorydb.find()
+    res.send(categories)
+}
+exports.getUnlistedCategory = async(req,res)=>{
+    const categories = await UnlistedCategorydb.find()
+    res.send(categories)
 }

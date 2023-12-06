@@ -17,9 +17,7 @@ passport.use(
   
         if (isMatch) {
           const id = user._id.toString();
-          console.log(id);
           const statususer = await Userdb.findByIdAndUpdate({_id:id},{$set:{status:'active'}})
-          console.log(statususer);
           return done(null, user);
         } else {
           return done(null, false, { message: 'Password Incorrect' });

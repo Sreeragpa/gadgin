@@ -3,11 +3,16 @@ const bcrypt = require('bcrypt')
 
 
 exports.create = async (req,res)=>{
-    const existingUser = await Userdb.findOne({email:req.body.email})
+    const existingUser = await Userdb.findOne({email:req.body.email});
+
+    const existingPhone = await Userdb.findOne({phone:req.body.phone});
         
             if(existingUser){
                 // res.send("User Already Exists")
                 res.render("userlogin.ejs",{messages:{error:"User Already exists"}})
+            }else if(existingPhone){
+                // res.render("userlogin.ejs",{messages:{error:"Phone already exists"}})
+                res.render('finalreg.ejs', { email: req.body.email,messages:{error:"Phone already exists"} })
             }else{
                 try{
                     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -20,7 +25,7 @@ exports.create = async (req,res)=>{
     
                     await user.save() 
                         .then(()=>{
-                            res.redirect("/login")
+                            res.render('successpage.ejs',{messages:"Password Updated"});
                         })
                         .catch(err=>{
                             res.status(500).send(err)
@@ -48,7 +53,7 @@ exports.updatepass = async (req, res) => {
         );
 
         if (updatedUser) {
-            res.render('successpasschange.ejs');
+            res.render('successpage.ejs',{messages:"User Registered"});
         }
     } catch (err) {
         console.error('Error updating password:', err);
