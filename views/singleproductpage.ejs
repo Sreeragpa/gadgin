@@ -57,9 +57,15 @@
             <!-- mobile -->
             <div class="mobile-btn-buynow mt-5 gap-2 ">
                 <div>
-                    <form action="/api/user/addtocart/<%=product._id%>" method="post">
-                        <button class="addtocart bold-500" type="submit"> Add to Cart</button>
+                    <%if(isInCart==null){%>
+                        <form action="/api/user/addtocart/<%=product._id%>" method="post">
+                            <button class="addtocart bold-500" type="submit"> Add to Cart</button>
+                        </form>
+                    <%}else{%>
+                        <form action="/cart" method="get">
+                        <button class="addtocart bold-500" type="submit"> Go to Cart</button>
                     </form>
+                    <%}%>
                 </div>
                 <div>
                     <form action="" >
