@@ -16,24 +16,24 @@ function countdown() {
     
 function showResendbutton() {
     // document.getElementById('otp-form').otpinputt.disabled=true;
-    if(flag<2){
+    // if(flag<2){
         resendButton.classList.remove('deactivated')
-    }
+    // }
     
 }
 
-resendButton.addEventListener('click',()=>{
-    const type=document.getElementById('type')
-    if(type.innerHTML=='Forgot Password'){
-        myForm.action = "/api/getotp/?forgotpass=1";
-    flag++;
-    // Submit the form
-    myForm.submit();
-    }else{
-        myForm.action = "/api/getotp";
-    flag++;
-    // Submit the form
-    myForm.submit();
-    }
+// resendButton.addEventListener('click',()=>{
+//     const type=document.getElementById('type')
+//     if(type.innerHTML=='Forgot Password'){
+//         myForm.action = "/api/getotp/?forgotpass=1";
+//     flag++;
+//     // Submit the form
+//     myForm.submit();
+//     }else{
+//         myForm.action = "/api/getotp";
+//     flag++;
+//     // Submit the form
+//     myForm.submit();
+//     }
     
-})
+// })

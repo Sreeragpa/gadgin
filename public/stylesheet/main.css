@@ -108,15 +108,14 @@ footer a{
 }
 
 
-
+.foot-sub1 h4{
+    color: white;
+}
 
 
 @media(max-width: 600px) {
     .search-button{
-        
         background-color: aqua;
-      
-       
     }
     .navv{
         justify-content: space-between;
@@ -146,9 +145,16 @@ footer a{
     .mobile-navv{
 
         position: sticky;
-        top: 0;
+        /* top: 0; */
         /* Adjust the background color as needed */
         z-index: 1000; 
           
+    }
+    .social-icons{
+        width: 50%;
+    }
+
+    .main-logo-footer svg{
+        width: 50px;
     }
   }

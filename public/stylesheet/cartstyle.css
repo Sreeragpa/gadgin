@@ -1,0 +1,147 @@
+.cart-heading{
+    display:flex;
+    align-items: center;
+}
+.cart-content{
+    display: flex;
+    padding-top: 25px;
+    width: 100%;
+    gap: 10px;
+}
+.cart-items{
+   
+    width: 70%;
+}
+.cart-calculations{
+    width: 30%;
+}
+.cart-item-card{
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    padding: 8px;
+    background-color: black;
+}
+
+.cart-item-img{
+    width: 100px;
+}
+.product-details-div{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.small-text{
+    font-size: 14px;
+}
+.remove-btn{
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+/* CALCULATIONS */
+.cart-calculations{
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 15px;
+    background-color: black;
+}
+.calc-div-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+.coupon-input{
+    width: 100%;
+    padding: 8px 0.5rem;
+    border: none;
+    outline: none;
+}
+.apply-btn{
+    background-color: FFE500;
+    padding: 8px 15px;
+    border: none;
+}
+.payment-btn{
+    width: 60%;
+    background-color: FFE500;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+}
+
+.price-details-mobile{
+    display: none;
+}
+
+/* Quantity Selector */
+.qty-selector{
+    border-radius: 8px;
+}
+  /* End Quantity Selector */
+
+  @media (max-width: 1110px){
+    .cart-content{
+        flex-direction: column;
+    }
+    .cart-content{
+        width: 100%;
+    }
+    .cart-items{
+        width: 100%;
+    }
+    .cart-calculations{
+        width: 100%;
+    }
+    .cart-item-card{
+        width: 100%;
+    }
+  }
+  @media (max-width:800px){
+    .hideme {
+        display: none;
+    }
+
+    .price-details-mobile{
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .remove-btn-div-mobile{
+        display: block;
+    }
+    .remove-btn{
+        font-size: 12px;
+    }
+    .cart-item-img{
+        width: 60px;
+    }
+    .pdt-title{
+        font-size: 12px;
+    }
+    .inner-content-div-user{
+        margin: 0px;
+        padding: 20px 5px;
+    }
+    .cart-calculations {
+        font-size: 12px;
+    }
+    .small-text{
+        font-size: 10px;
+    }
+    .product-details-div{
+        padding: 10px;
+    }
+    .qty-selector{
+
+        font-size: 10px;
+    }
+    .cart-heading{
+        margin-left: 8px;
+    }
+       
+    
+  }

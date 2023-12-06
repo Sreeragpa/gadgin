@@ -1,5 +1,5 @@
 const pname = document.getElementById('pname')
-  const category = document.getElementById('categDropdown')
+  // const category = document.getElementById('categDropdown')
   const description = document.getElementById('description')
   const brand = document.getElementById('brand')
   const mrp = document.getElementById('mrp')
@@ -17,10 +17,10 @@ const pname = document.getElementById('pname')
       flag=1;
       document.getElementById('name-error').innerHTML='Name is required';
     }
-    if(category.value==='' || category.value===null){
-      flag=1;
-      document.getElementById('category-error').innerHTML='Category is required';
-    }
+    // if(category.value==='' || category.value===null){
+    //   flag=1;
+    //   document.getElementById('category-error').innerHTML='Category is required';
+    // }
     if(description.value==='' || description.value===null){
       flag=1;
       document.getElementById('description-error').innerHTML='Description is required';
@@ -37,6 +37,16 @@ const pname = document.getElementById('pname')
       flag=1;
       document.getElementById('price-error').innerHTML='Price is required';
     }
+    if(Number(price.value)<0){
+      flag=1;
+      console.log(Number(price.value));
+      document.getElementById('price-error').innerHTML='Price should be greater than zero';
+    }
+    if(Number(mrp.value)<0){
+      flag=1;
+      console.log(Number(mrp.value));
+      document.getElementById('mrp-error').innerHTML='MRP should be greater than zero';
+    }
     if(color.value==='' || color.value===null){
       flag=1;
       document.getElementById('color-error').innerHTML='Color is required';
@@ -45,9 +55,13 @@ const pname = document.getElementById('pname')
       flag=1;
       document.getElementById('quantity-error').innerHTML='Quantity is required';
     }
+    if(quantity.value<0){
+      flag=1;
+      document.getElementById('quantity-error').innerHTML='Quantity should be greater than zero';
+    }
     if(img_input.value==='' || img_input.value===null){
       flag=1;
-      document.getElementById('image-error').innerHTML='Image is required';
+      document.getElementById('image-errorr').innerHTML='Image is required';
     }
 
      if(flag==1){
@@ -61,9 +75,9 @@ const pname = document.getElementById('pname')
   pname.addEventListener('keyup',()=>{
     document.getElementById('name-error').innerHTML=""
   })
-  category.addEventListener('keyup',()=>{
-    document.getElementById('category-error').innerHTML=""
-  })
+  // category.addEventListener('keyup',()=>{
+  //   document.getElementById('category-error').innerHTML=""
+  // })
   description.addEventListener('keyup',()=>{
     document.getElementById('description-error').innerHTML=""
   })
@@ -84,7 +98,7 @@ const pname = document.getElementById('pname')
     document.getElementById('quantity-error').innerHTML=""
   })
   img_input.addEventListener('change',()=>{
-    document.getElementById('image-error').innerHTML=""
+    document.getElementById('image-errorr').innerHTML=""
   })
   
 

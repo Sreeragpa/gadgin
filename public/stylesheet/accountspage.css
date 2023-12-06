@@ -2,25 +2,36 @@
     margin: 0px 50px 50px 50px;
     padding: 50px;
     background-color: 1C1C1C;
+    box-sizing: border-box;
+    width: 100%;
+    
 }
 body{
     background-color: black;
 }
-
+.main-div{
+    width: 100%;
+}
 .user-details-div{
     display: flex;
     width: 100%;
     gap:10px;
 }
 .user-di{
+    display: flex;
+    flex-direction: column;
     width: 50%;
 }
 .user-profile-details{
     background-color: black;
     border-radius: 20px;
     padding: 30px;
+    width: 100%;
 }
 .user-manage{
+    display:flex;
+    justify-content: center;
+    border-radius: 20px;
     width: 50%;
 }
 ul {
@@ -36,4 +47,62 @@ ul {
     background-color: rgb(200, 0, 0);
     border: none;
     padding: 4px 8px;
+}
+.personalinfo-user{
+    width: 100%;
+}
+.user-manage-card{
+    display: flex;
+    background-color: black;
+    width: 160px;
+    height: 160px;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+@media(max-width:954px) {
+    .user-details-div{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .user-manage{
+        width: auto;
+    }
+    .user-di {
+        width: 100%;
+    }
+    .user-profile-details{
+        width: 100%;
+    }
+}
+
+@media(max-width:660px) {
+    .inner-content-div-user{
+        margin: 0px;
+    }
+    .user-details-div{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .user-manage-card{
+        width: 90px;
+        height: 90px;
+    }
+    .user-manage-card svg{
+        width: 50%;
+        height: 50%;
+        align-self: center;
+    }
+    .cards-row{
+        width: 100%;
+    }
+    li{
+        font-size: 12px;
+    }
+
+ 
 }

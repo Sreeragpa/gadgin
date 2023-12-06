@@ -1,18 +1,16 @@
 // const images = document.getElementById('img-input').files;
  const imginput = document.getElementById('img-input');
- const productbtn = document.getElementById('add-pdt-btn')
+ 
 let files = [];
 
 
 document.getElementById('img-input').addEventListener('change',async(event)=>{
   const file = imginput.files;
-  console.log(files.length);
-  if(files.length + file.length > 4){
-    document.getElementById('image-errorr').innerHTML="Please select up to 4 files";
-    event.target.value = '';
-    uploadImage2()
+  console.log(file);
+  files=[]
+  if(files.length + file.length > 1){
+  
   }else{
-    document.getElementById('image-errorr').innerHTML="";
 
     for(let i =0;i<file.length;i++){
       files.push(file[i])
@@ -51,7 +49,6 @@ document.getElementById('img-input').addEventListener('change',async(event)=>{
       function delImage(index){
 
         files.splice(index,1)
-        document.getElementById('image-errorr').innerHTML="";
         showImages()
         uploadImage2()
       }
@@ -66,12 +63,12 @@ document.getElementById('img-input').addEventListener('change',async(event)=>{
             imgElement.src = URL.createObjectURL(e);
             imgElement.onload = (event) => {
               const canvas = document.createElement('canvas');
-              const MAX_WIDTH = 640;
-              const MAX_HEIGHT = 640;
+              const MAX_WIDTH = 720;
+              // const MAX_HEIGHT = 640;
               const scaleSize = MAX_WIDTH / event.target.width;
               canvas.width = MAX_WIDTH;
-              // canvas.height = event.target.height * scaleSize;
-              canvas.height = MAX_HEIGHT;
+              canvas.height = event.target.height * scaleSize;
+              // canvas.height = MAX_HEIGHT;
       
               const ctx = canvas.getContext('2d');
               ctx.drawImage(event.target, 0, 0, canvas.width, canvas.height);
@@ -102,7 +99,6 @@ document.getElementById('img-input').addEventListener('change',async(event)=>{
 
            imginput.files = dataTransfer.files;
 
-          const form = document.getElementById('pdt-form');
 
   }
 
