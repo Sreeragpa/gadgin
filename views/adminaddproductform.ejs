@@ -218,10 +218,18 @@
 						<div class="d-flex gap-5 addproduct-form mt-3">
 							<div class="d-flex flex-column">
 								<label for="color">Product Images:</label>
-								<input type="file" name="images" multiple class="product-name-input" id="img-input">
-								<span id="image-error" class="text-danger"></span>
+								<input type="file" name="images" multiple class="product-name-input" id="img-input" accept="image/*">
+								<span id="image-errorr" class="text-danger"></span>
 							</div>
 
+						</div>
+						<div class=" d-flex mt-5" id="imageContainer">
+							<!-- <div class="preview-img-div">
+								<img class="img-fluid preview-img" src="/uploads/images-1700583732256.webp">
+	
+								<button class="text-white text-bg-danger p-1 close-btnn">&times;</button>
+	
+							</div> -->
 						</div>
 						<div class="d-flex align-items-center justify-content-center mt-3">
 							<button type="submit" class="search-btn submitt-btn text-bg-dark" id="add-pdt-btn" >Add
@@ -235,18 +243,9 @@
 					<!-- /item -->
 				</div>
 			
-					<div class=" d-flex mt-5" id="imageContainer">
-						<!-- <div class="preview-img-div">
-							<img class="img-fluid preview-img" src="/uploads/images-1700583732256.webp">
+					
 
-							<button class="text-white text-bg-danger p-1 close-btnn">&times;</button>
-
-						</div> -->
-					</div>
-
-					<div class="bg-danger" id="imgcrop-test">
-						
-					</div>
+					
 
 			
 
@@ -259,6 +258,7 @@
 	</section>
 	<!-- CONTENT -->
 	<script src="/js/uploadimagehandler.js"></script>
+	
 	<script src="/js/addproductform.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

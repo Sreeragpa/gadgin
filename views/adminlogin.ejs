@@ -40,6 +40,11 @@
 				<input type="email" class="input-box" name="email" placeholder="Email">
 				<label for="password">Password</label>
 				<input type="password"  class="input-box" name="password" placeholder="Password">
+				<% if (messages.passerror) { %>
+					<span class="text-danger">
+						<%= messages.passerror %>
+					</span>
+					<% } %>
 
 				<button class="login-btn">
 					Login

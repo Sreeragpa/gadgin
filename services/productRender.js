@@ -27,41 +27,6 @@ exports.addproductform = (req,res)=>{
 }
 
 
-exports.getCategory = async(req,res)=>{
-    const categories = await Categorydb.find()
-    res.send(categories)
-}
-exports.getUnlistedCategory = async(req,res)=>{
-    const categories = await UnlistedCategorydb.find()
-    res.send(categories)
-}
-
-
-exports.createCategory = async(req,res)=>{
-    cat=req.body.category;
-    cat=cat.toLowerCase();
-
-    const categories = await Categorydb.findOne({categoryName:cat})
- 
-
-    if(categories){
-        
-        res.render('adminaddcategory.ejs',{messages:{error:"Category Exists"}})
-    }else{
-        const files = req.files;
-        // console.log(files);
-        imag="/uploads/" + files[0].filename;
-        
-        
-        const newCate = new Categorydb({
-            categoryName:cat,
-            images:imag
-        })
-        result=await newCate.save()
-        res.redirect('/admin/categorymgmt')
-    }
-   
-}
 
 exports.addCategory = async (req,res)=>{
     res.render('adminaddcategory.ejs')
@@ -79,4 +44,39 @@ exports.categoryManagement = async (req,res)=>{
     if(response){
         res.render('admincategorymgmt.ejs',{categories:response.data})
     }
+}
+
+exports.productsbyCategory = async(req,res)=>{
+    if(req.query.category){
+        axios.get(`http://localhost:3001/api/products?category=${req.query.category}`)
+        .then(function(response){
+            if(!response.data){
+                res.send("No products")
+            }else{
+                res.render('productpage.ejs',{products:response.data,isInCart:null})
+            }
+           
+        }).catch(err=>{
+            console.log(err);
+        })
+    }else{
+        axios.get(`http://localhost:3001/api/products`)
+        .then(function(response){
+            console.log(response);
+            res.render('productpage.ejs',{products:response.data,isInCart:null})
+        }).catch(err=>{
+            console.log(err);
+        })
+    }
+}
+
+exports.getProductdetails = async(req,res)=>{
+    axios.all([
+        axios.get(`http://localhost:3001/api/getproduct/${req.params.id}`),
+        axios.get(' http://localhost:3001/api/getcategory')
+    ])
+
+    .then(axios.spread((response1,response2)=>{
+        res.render('admineditproductform.ejs',{product:response1.data,categories:response2.data})
+    }))
 }

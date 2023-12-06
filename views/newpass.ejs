@@ -27,7 +27,7 @@
     <div class="form-div">
         <div class="form-div-inner">
             <form class="login-form"  id="form" action="/api/update" method="post">
-                <h3 class="a-center">Register</h3>
+                <h3 class="a-center">Reset Password</h3>
                 <span class="err-msg align-self-center text-danger" id="errorElement">
                     <% if (messages.error) { %>
                         <%= messages.error %>
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Confirm Password</label>
                     <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword">
-
+                    <span id="comparepass-error" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
                     <div class="a-center">
@@ -65,6 +65,7 @@
 
     
 <!-- Footer -->
+<script src="/js/confirmpasschecker.js"></script>
 <%- include('include/_footer') %>
 <!-- Footer -->
 

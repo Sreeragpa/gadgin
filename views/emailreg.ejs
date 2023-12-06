@@ -33,16 +33,16 @@
         <div class="form-div-inner">
             <form class="login-form" action="/api/getotp" method="post" id="form">
                 <h3 class="a-center">Register</h3>
-                <span class="err-msg align-self-center text-danger" id="errorElement">
-                    <% if (messages.error) { %>
-                        <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
-                        <%= messages.error %>
-                        <% } %>
-                </span>
+          
                 <div class="form-group mail">
                     <label for="email">Email address<span id="email-error"></span></label>
                     <input type="email" id="email" class="form-control" name="email" aria-describedby="emailHelp"
                         placeholder="Enter email" onkeyup="validateEmail()">
+                        <span class="err-msg align-self-center text-danger" id="errorElement">
+                            <% if (messages.error) { %>
+                                <%= messages.error %>
+                                <% } %>
+                        </span>
                 </div>
                 <div class="form-group form-check">
                     <div class="a-center">

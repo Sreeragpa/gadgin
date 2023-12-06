@@ -68,7 +68,7 @@
 
         <div class="featured-products-container text-white">
             <h4>Featured Products</h4>
-            <div class="featured-products-scroll">
+            <div class="featured-products-scroll" id="myDiv">
                 <% for(let i=0;i<products.length;i++) {%>
                 <a href="/sproduct/<%=products[i]._id%>">
                     <div class="featured-product">
@@ -76,7 +76,7 @@
                         <div class="product-details">
                             <div class="fw-bold wrap-text-100 py-2"><%=products[i].name%></div>
                             <%if(products[i].discount>0){%>
-                            <span class="text-bg-success discount-span">-<%=products[i].discount%>%</span>
+                            <span class="text-bg-success discount-span"><%=products[i].discount%>%</span>
                             <%}%>
                             <div class="">₹<%=products[i].price%></div>
                             <%if(products[i].price!=products[i].mrp){%>
@@ -101,17 +101,26 @@
                                         fill="#FFCB45" />
                                 </svg>
                             </div>
+                    
+                        </div>
+                        <div class="">
+                            <a href="/dkmdk">
+                                <i class="fa-regular fa-heart fa-lg favourite-span" style="color: #ffffff; font-size: 20px;"></i>
+                            </a>
+                            
                         </div>
                     </div>
                 </a>
                 <% } %>
-  
+                
         
             </div>
+            <!-- Scroll Buttons -->
             <div class="left-right-btns">
-                <button class="scroll-btnn-left scroll-btnn" class="scroll-left"><i class="fa-solid fa-arrow-right fa-flip-both" style="color: #000000;"></i></button>
-          <button class="scroll-btnn-right scroll-btnn" class="scroll-left" ><i class="fa-solid fa-arrow-right" style="color: #000000;"></i></button>
-          </div>
+                <button class="scroll-btnn-left scroll-btnn scroll-left" id="btn1" ><i class="fa-solid fa-arrow-right fa-flip-both" style="color: #000000;"></i></button>
+                <button class="scroll-btnn-right scroll-btnn scroll-right" id="btn2"><i class="fa-solid fa-arrow-right" style="color: #000000;"></i></button>
+            </div>
+            <!-- / Scroll Buttons -->
           
           
         </div>
@@ -135,10 +144,10 @@
             </div>
             
                 <!-- Scroll Button -->
-                <div class="left-right-btns">
+                <!-- <div class="left-right-btns">
                     <button class="scroll-btnn-left scroll-btnn"><i class="fa-solid fa-arrow-right fa-flip-both" style="color: #000000;"></i></button>
               <button class="scroll-btnn-right scroll-btnn"><i class="fa-solid fa-arrow-right" style="color: #000000;"></i></button>
-              </div>
+              </div> -->
                 <!-- Scroll Button -->
         </div>
         <!-- /Shop By Category -->
@@ -174,7 +183,7 @@
 
     </div>
     <!-- /MAIN -->
-    <script>
+    <!-- <script>
         // Function to scroll horizontally
         function scrollHorizontally(amount) {
           document.body.scrollLeft += amount; // For Safari
@@ -203,8 +212,21 @@
             scrollRightButton.style.display = "none";
           }
         }
-      </script>
+      </script> -->
 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ 
+      <script>
+        $("#btn1").click(function () {
+            var currentScrollLeft = $("#myDiv").scrollLeft();
+            $("#myDiv").animate({scrollLeft: currentScrollLeft - 600}, 500);
+        });
+
+        $("#btn2").click(function () {
+            var currentScrollLeft = $("#myDiv").scrollLeft();
+            $("#myDiv").animate({scrollLeft: currentScrollLeft + 600}, 500);
+        });
+      </script>
     <script src="/js/scrolltest.js"></script>
     <!-- Footer -->
     <%- include('include/_footer') %>

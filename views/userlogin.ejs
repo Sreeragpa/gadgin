@@ -34,7 +34,7 @@
             <form class="login-form" method="POST" action="/login">
                 <h3 class="a-center">Login</h3>
                 <span class="err-msg align-self-center text-danger" id="errorElement">
-                        <% if (messages.error) { %>
+                        <% if (messages.error && messages.error!="Password Incorrect") { %>
                             <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                             <%= messages.error %>
                             <% } %>
@@ -47,6 +47,14 @@
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    <span class="err-msg align-self-center text-danger" id="errorElement">
+                        <div>
+                            <% if (messages.error=="Password Incorrect") { %>
+                                <%= messages.error %>
+                                <% } %>
+                        </div>
+                      
+					</span>
                     <a class="sm-font text-white" href="/forgotpass">Forgot Password</a>
                 </div>
                 <div class="form-group form-check">

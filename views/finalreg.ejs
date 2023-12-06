@@ -37,21 +37,25 @@
                     <label for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" id="name" id="exampleInputEmail1" aria-describedby="emailHelp"
                         placeholder="Name" name="name">
+                        <span class="text-danger" id="name-error"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail1">Password</label>
                     <input type="password" class="form-control" id="password" aria-describedby="emailHelp"
                         placeholder="Password" name="password">
+                        <span class="text-danger" id="pass-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Confirm Password</label>
                     <input type="password" class="form-control" id="confirmpassword" placeholder="Confirm Password" name="confirmpassword">
+                    <span class="text-danger" id="passmatch-error"></span>
 
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Phone</label>
                     <input type="number" class="form-control" id="phone" placeholder="Phone" name="phone">
+                    <span class="text-danger" id="phone-error"></span>
 
                 </div>
                 <div class="form-group form-check">
@@ -71,8 +75,7 @@
         </div>
     </div>
     <!-- Login Form Ends -->
-
-
+    <script src="/js/registerValidation.js"></script>
     
 <!-- Footer -->
 <%- include('include/_footer') %>

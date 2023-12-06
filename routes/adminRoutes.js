@@ -8,14 +8,14 @@ route.get('/',adminAuthenticated,adminRender.admindash)
 route.get('/login',adminNotAuthenticated,adminRender.loginpage)
 route.post('/login',adminNotAuthenticated,adminRender.loginvalidate)
 route.get('/logout',adminRender.logout)
-route.get('/productmgmt',productRender.productmanagement)
-route.get('/productmgmt/unlisted',productRender.Unlistedproductmanagement)
-route.get('/addproduct',productRender.addproductform)
-route.get('/addcategory',productRender.addCategory)
-route.get('/categorymgmt',productRender.categoryManagement)
+route.get('/productmgmt',adminAuthenticated,productRender.productmanagement)
+route.get('/productmgmt/unlisted',adminAuthenticated,productRender.Unlistedproductmanagement)
+route.get('/addproduct',adminAuthenticated,productRender.addproductform)
+route.get('/addcategory',adminAuthenticated,productRender.addCategory)
+route.get('/categorymgmt',adminAuthenticated,productRender.categoryManagement)
 route.get('/categorymgmt/unlisted',adminAuthenticated,productRender.unlistedCategorymgmt)
-route.get('/usermgmt',adminRender.usermgmt)
-
+route.get('/usermgmt',adminAuthenticated,adminRender.usermgmt)
+route.get('/getproduct/:id',productRender.getProductdetails)
 
 
 

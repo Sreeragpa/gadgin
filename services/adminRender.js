@@ -13,13 +13,27 @@ exports.loginvalidate = (req,res)=>{
         password:"123"
     }
 
-    if(req.body.email==admincred.email && req.body.password==admincred.password){
+    function checkAdminCredentials(email, password) {
+        return email === admincred.email && password === admincred.password;
+    }
+    const isMatch = checkAdminCredentials(req.body.email,req.body.password)
+
+    if(isMatch){
         req.session.isAdminLogged = true;
         res.redirect("/admin");
-        // res.send("Logged in")
+    }else if(req.body.password!=admincred.password && req.body.email==admincred.email){
+        res.render("adminlogin.ejs",{messages:{passerror:"Invalid Password"}})
     }else{
         res.render("adminlogin.ejs",{messages:{error:"Invalid Credentials"}})
     }
+
+    // if(req.body.email==admincred.email && req.body.password==admincred.password){
+    //     req.session.isAdminLogged = true;
+    //     res.redirect("/admin");
+    //     // res.send("Logged in")
+    // }else{
+    //     res.render("adminlogin.ejs",{messages:{error:"Invalid Credentials"}})
+    // }
 }
 exports.logout = (req,res)=>{
     req.session.destroy(err => {

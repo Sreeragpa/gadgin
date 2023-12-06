@@ -18,6 +18,8 @@ exports.homepage=(req, res) => {
 
  
 }
+
+
 exports.login=(req, res) => {
     res.render("userlogin.ejs")
 }
@@ -37,22 +39,35 @@ exports.forgotpass=(req, res) => {
     }
     res.render('forgotpass.ejs')
 }
-exports.logout= (req, res) => {
+exports.logout= async(req, res) => {
     const userId = req.session.passport.user;
-    // console.log(userId);
-    req.session.destroy(async err => {
-        if (err) {
-            res.send(err);
-        } else {
+    // req.session.destroy(async err => {
+    //     if (err) {
+    //         res.send(err);
+    //     } else {
+    //         await Userdb.findByIdAndUpdate({_id:userId},{$set:{status:'inactive'}})
+    //         res.redirect("/login")
+    //     }
+    // });
+    delete req.session.passport.user;
             await Userdb.findByIdAndUpdate({_id:userId},{$set:{status:'inactive'}})
             res.redirect("/login")
-        }
-    });
+
 
 }
 exports.otpreg=(req, res) => {
     if(req.session.email){
         res.render('otpreg.ejs',{email:req.session.email})
+        req.session.destroy();
+    }else{
+        res.render('errorpage.ejs');
+    }
+  
+    
+}
+exports.otpregfpass=(req, res) => {
+    if(req.session.email){
+        res.render('otpregfpass.ejs',{email:req.session.email})
         req.session.destroy();
     }else{
         res.render('errorpage.ejs');
@@ -75,4 +90,23 @@ exports.userAccount = async(req,res)=>{
     }
    
    
+}
+
+exports.cart = async(req,res)=>{
+    
+        const userid = req.session.passport.user;
+        axios.get(`http://localhost:3001/api/user/getCart/${userid}`)
+        .then(function(response){
+            if(response.data && response.data.length>0){
+                res.render("cartpage.ejs",{cartitems:response.data,items:'true'})
+            }else{
+                res.render("cartpage.ejs",{items:'false'})
+            }
+            
+        }).catch((err)=>{
+            console.error(err);
+            res.redirect('/');
+        })
+ 
+    
 }
