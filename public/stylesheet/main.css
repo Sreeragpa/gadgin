@@ -13,6 +13,9 @@ body{
 
 
 }
+#search-box{
+    background-color: transparent;
+}
 .navv{
     display: flex;
     background-color: var(--primary-color);
