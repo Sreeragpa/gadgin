@@ -1,5 +1,5 @@
-const session  = require('express-session');
-const axios = require('axios')
+const axios = require('axios');
+
 exports.loginpage = (req,res)=>{
     res.render('adminlogin.ejs')
 }
@@ -46,15 +46,69 @@ exports.logout = (req,res)=>{
 
 }
 
-exports.usermgmt = (req,res)=>{
-    axios.get(`http://localhost:3001/api/getusers`)
+exports.usermgmt = (req,res,next)=>{
+    axios.get(`http://localhost:${process.env.PORT}/api/getusers`)
         .then((response)=>{
             res.render('adminusermgmt.ejs',{users:response.data})
         })
-        .catch((err)=>{
-            res.send("Usermgmt error")
+        .catch((error)=>{
+            next(error)
         })
     
+}
+
+exports.ordermgmt = async(req,res,next)=>{
+    if(req.query.orderStatus){
+        try {
+
+            const page = req.query.page || 1;
+            const currentPage = page;
+            const orderss = await axios.get(`http://localhost:${process.env.PORT}/api/admin/getorders/userdetails?orderStatus=${req.query.orderStatus}&page=${page}`);
+
+            if(orderss){
+                // console.log(orders.data);
+                const {orders,pageCount} = orderss.data;
+                res.render('adminordermgmt.ejs',{orders:orders,query:req.query.orderStatus,pageCount:pageCount,currentPage:currentPage})
+            }else{
+                console.log('error');
+            }
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }else{
+        try {
+            const page = req.query.page || 1;
+            const currentPage = page;
+            const orderss = await axios.get(`http://localhost:${process.env.PORT}/api/admin/getorders/userdetails?page=${page}`);
+            if(orderss){
+                const {orders,pageCount} = orderss.data;
+                // console.log(orders.data);
+                res.render('adminordermgmt.ejs',{orders:orders,query:null,pageCount:pageCount,currentPage:currentPage})
+            }else{
+                // console.log('error');
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+   
+}
+
+exports.ordersmgmtsingle = async(req,res,next)=>{
+    try {
+        const orderid = req.params.id;
+        console.log(orderid);
+    // const result = await Orderdb.find({_id:orderid})
+
+    const result =await axios.get(`http://localhost:${process.env.PORT}/api/admin/getorder/${orderid}`)
+    if(result){
+        res.render('adminorderdetailed',{orders:result.data[0]})
+    }
+    } catch (error) {
+        next(error)
+    }
+ 
 }
 
 

@@ -36,9 +36,20 @@
     <div class="container-fluid p-0 main-div">
       <div class="inner-content-div-user text-white">
         <div class="user-head">
-            <h4>Hello, <%=user.name%></h4>
-            <hr>
+            <div>
+                <h4>Hello, <%=user.name%></h4>
+                
+            </div>
+            <div class="profile-image-div">
+                <%if(!user.profileimg){%>
+                <img class="profile-image" src="/img/userprofile.png" alt="">
+                <%}else{%>
+                    <img class="profile-image" src="<%=user.profileimg%>" alt="">
+                <%}%>
+            
+            </div>
         </div>
+        <hr class="mt-1">
         <div class="user-details-div">
             <div class="user-di">
                 <div class="user-profile-details">
@@ -65,7 +76,7 @@
               <div class="cards-row">
                                  <!-- Order Card -->
                                  <div class="col-6 user-manage-card">
-                                    <a href="" >
+                                    <a href="/myorders" >
                                         <div class="d-flex flex-column align-content-center justify-content-center text-center">
                                             <svg width="66" height="66" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M12.667 22.581C12.667 22.3766 12.667 22.2744 12.7051 22.1825C12.7431 22.0906 12.8154 22.0184 12.9599 21.8739L20.9954 13.8383C21.5735 13.2603 21.8625 12.9712 22.2301 12.819C22.5976 12.6667 23.0063 12.6667 23.8238 12.6667H52.1768C52.9943 12.6667 53.4031 12.6667 53.7706 12.819C54.1381 12.9712 54.4272 13.2603 55.0052 13.8383L63.0408 21.8739C63.1853 22.0184 63.2575 22.0906 63.2956 22.1825C63.3337 22.2744 63.3337 22.3766 63.3337 22.581V25.3334H12.667V22.581Z" stroke="white" stroke-width="2"/>
@@ -93,7 +104,7 @@
               <div class="cards-row">
                 <!-- Address Card -->
                 <div class="col-6 user-manage-card">
-                    <a href="" >
+                    <a href="/manageaddress" >
                         <div class="d-flex flex-column align-content-center justify-content-center text-center">
                             <svg width="66" height="66" viewBox="0 0 76 84" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_138_1282)">
@@ -114,7 +125,7 @@
                 <!-- Address Card -->
                 <!-- Account Card -->
                 <div class="col-6 user-manage-card">
-                    <a href="" >
+                    <a href="/editaccount" >
                         <div class="d-flex flex-column align-content-center justify-content-center text-center">
                             <svg width="66" height="66" viewBox="0 0 76 76" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <rect width="76" height="76" fill="url(#pattern0)"/>

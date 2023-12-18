@@ -33,7 +33,7 @@
 
 
         <!-- MAIN -->
-        <div class="container-fluid p-0 main-div">
+        <div class="container-fluid p-0 main-div mm">
             <!-- Content -->
             <div class="inner-content-div-user text-white">
 
@@ -51,6 +51,15 @@
                 <!-- Cart Content -->
                 <div class="cart-content">
                      <div class="cart-items">
+                        <%if(items=="true"){%>
+                            <div class="mb-2">
+                                <form action="/api/user/cart/clear" method="post">
+                                    <button class="clear-btn text-white">Clear Cart  <i class="fa-solid fa-arrows-rotate" style="color: #ffffff;"></i></button>  
+                                </form>
+                            </div>
+                            
+                        <%}%>
+                  
                         <!-- Cart-item-card -->
                         <%if(items=="true"){%>
                             <% for(let i=0;i<cartitems.length;i++){%>
@@ -61,13 +70,23 @@
                                     <div class="product-details-div">
                                         <div class="product-details-first">
                                             <span class="fw-bold wrap-text-100 pdt-title"><%=cartitems[i].cartItemsWithDetails[0].name%></span>
-                                            <div class="qty-selector-div mt-2">Qty:
-                                                <select name="quantity" id="quantity" class="qty-selector" data-pid ="/api/cart/updatequantity/<%=cartitems[i].cartItemsWithDetails[0]._id%>">
-                                                    <% for(let j=0;j<5;j++){%>
-                                                        <option value="<%=j+1%>" <%=(cartitems[i].cartitems.quantity==j+1)?"selected":''%>><%=j+1%></option>
-                                                    <% }%>
-                                                  </select>
-                                            </div>
+                                            <%if(cartitems[i].cartItemsWithDetails[0].quantity==0){%>
+                                                <div class="mt-1"><span class="text-danger stock">Out of Stock</span>
+                                                    <input name="quantity" id="quantity" class="d-none" value=0></input>
+                                                </div>
+                                            <%}else{%>
+                                                <div class="qty-selector-div mt-2">Qty:
+                                                    <select name="quantity" id="quantity" class="qty-selector" data-pid ="/api/cart/updatequantity/<%=cartitems[i].cartItemsWithDetails[0]._id%>">
+                                                        <% for(let j=1;j<=5;j++){%>
+                                                            <%if(cartitems[i].cartItemsWithDetails[0].quantity<j){%>
+                                                                <%break;%>
+                                                            <%}%>
+                                                            <option value="<%=j%>" <%=(cartitems[i].cartitems.quantity==j)?"selected":''%>><%=j%></option>
+                                                        <% }%>
+                                                      </select>
+                                                </div>
+                                            <%}%>
+                                            
                                             <!-- Mobile -->
                                             <div class="price-details-mobile">
                                                 <div class="product-details-second">
@@ -127,26 +146,35 @@
                         <hr>
                         <div class="calc-div-row fw-bold">
                             <div><span>Total:</span></div>
-                            <div>₹<span id="total">88,540</span></div>
+                            <div>₹<span id="total"></span></div>
                         </div>
                         <div class="calc-div-row">
                             <div><input class="coupon-input" type="text" placeholder="Coupon Code"></div>
                             <div><button class="apply-btn">Apply</button></div>
                         </div>
                         <div class="d-flex justify-content-center mt-3">
-                            <button class="payment-btn fw-bold">Proceed to Payment</button>
+                            <form action="/ordersummary/cart" method="get" action="<%=(quantityerror)?"":"/ordersummary/cart"%>">
+                            <button class="payment-btn fw-bold" id="<%=(quantityerror)?"preventbtn":""%>" type="submit">Proceed to Payment</button>
+                        </form>
                         </div>
                      </div>
                 </div>
                 <!-- /Cart Content -->
-
-
+                
+        </div>
+                	<!-- MODAL -->
+		        <div id="continue-overlay">
+			        <div id="modal">
+			         <p>An Item in your Cart is Out of Stock</p>
+			        <button id="cancelBtn">Ok</button>
+			        </div>
+		        </div>
+		            <!-- MODAL -->
                 
             </div>
             
             <!-- /Content -->
-
-        </div>
+	
         <!-- /MAIN -->
 
 
@@ -154,8 +182,19 @@
         <!-- Footer -->
         <%- include('include/_footer') %>
         <!-- Footer -->
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="/js/cartcalc.js"></script>
+        <script>
+            const overlay = document.getElementById('continue-overlay');
+            document.getElementById('preventbtn').addEventListener('click',(e)=>{
+                e.preventDefault();
+                overlay.style.display = 'flex';
+                document.getElementById('cancelBtn').addEventListener('click',(e)=>{
+                    overlay.style.display = '';
+                })
+            })
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        
         <script src="/js/cartupdateAJAX.js"></script>
         
     </body>

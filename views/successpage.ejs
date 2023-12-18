@@ -11,7 +11,7 @@
     <!-- Bootstrap -->
     <!-- Fontawesome -->
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <!-- Fontawesome -->
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/stylesheet/main.css">
@@ -24,36 +24,39 @@
 
     <!-- Header -->
     <%- include('include/_headerwocart') %>
-    <!-- Header -->
+        <!-- Header -->
 
 
 
-    <!-- Login Form -->
-    <div class="form-div d-flex">
-        <div class="form-div-inner d-flex align-items-center flex-lg-column">
-            <div>
-                <h3><%=messages%></h3>
+        <!-- Login Form -->
+        <div class="form-div d-flex">
+            <div class="form-div-inner d-flex align-items-center flex-lg-column">
+                <div>
+                    <h3>
+                        <%=messages%>
+                    </h3>
+                </div>
+                <br>
+                <div>
+                    <i class="fa-solid fa-circle-check fa-xl" style="color: #00ff62;"></i>
+                    
+                </div>
+                <br>
+                <div>
+                    <button class="btn btn-primary"><a href="/login" class="text-decoration-none">Login</a></button>
+                </div>
+
+
             </div>
-        <br>
-            <div>
-                <i class="fa-solid fa-circle-check fa-xl" style="color: #00ff62;"></i>
-            </div>
-            <br>
-            <div>
-                <button class="btn btn-primary"><a href="/login" class="text-decoration-none">Login</a></button>
-            </div>
-           
-
         </div>
-    </div>
-    <!-- Login Form Ends -->
+        <!-- Login Form Ends -->
 
 
-    
-<!-- Footer -->
-<%- include('include/_footer') %>
-<!-- Footer -->
-   
+
+        <!-- Footer -->
+        <%- include('include/_footer') %>
+            <!-- Footer -->
+
 
 </body>
 

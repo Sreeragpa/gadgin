@@ -38,8 +38,8 @@
                         <label for="category">Category:</label>
                         <select id="category" name="category" class="select-sty">
                             <option value="all">All Categories</option>
-                            <option value="electronics">Electronics</option>
-                            <option value="clothing">Clothing</option>
+                            <option value="mobile">Mobiles</option>
+                            <option value="laptop">Laptops</option>
                             <!-- Add more categories as needed -->
                         </select>
                     </div>
@@ -75,7 +75,7 @@
                         <i class="fa-solid fa-filter" style="color: #ffffff;"></i>
                     </div>
                     <div class="text-white">
-                        <h3>
+                        <h3 class="text-capitalize">
                             <%= products[0].category%>
                         </h3>
                     </div>
@@ -102,9 +102,9 @@
                                     </div>
                                     <div class="pdt-pp">
                                         <div>
-                                            <div>₹<%=products[i].price%>
+                                            <div>₹<%=products[i].price.toLocaleString('en-IN')%>
                                             </div>
-                                            <div><s>₹<%=products[i].mrp%></s></div>
+                                            <div><s>₹<%=products[i].mrp.toLocaleString('en-IN')%></s></div>
                                             <div><svg width="57" height="9" viewBox="0 0 57 9" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path

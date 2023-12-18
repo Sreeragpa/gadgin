@@ -40,9 +40,9 @@
                         <div class="otp-timer" id="otp-timer"></div>
                       
                     </div>
-                    <div class="resendotp " id="resendbutton">
+                    <div class="resendotp deactivated" id="resendbutton">
                    
-                                <button class="resendotp-btn" id="resendbutton-v">Resend</button>
+                                <button class="resendotp-btn" id="resendbutton">Resend</button>
                                 <input type="email" class="form-control d-none" id="email" placeholder="OTP" name="email" value="<%=email%>">
 
                        
@@ -63,25 +63,24 @@
     </div>
     <!-- Login Form Ends -->
 
-
-    
 <!-- Footer -->
 <%- include('include/_footer') %>
 <!-- Footer -->
 <script>
     document.getElementById('continue-btnn').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('form').submit()
+        // e.preventDefault();
+        // document.getElementById('form').submit()
     })
-    document.getElementById('resendbutton-v').addEventListener('click', (event) => {
+    document.getElementById('resendbutton').addEventListener('click', (event) => {
         event.preventDefault()
         document.getElementById('form').action='/api/getotp';
         document.getElementById('form').submit()
     })
 </script>
 <script src="/js/otpvalidation.js"></script>
-<script src="/js/validation.js"></script>
 <!-- <script src="/js/validation.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/otpsubmitAJAX.js"></script>
 </body>
 
 </html>

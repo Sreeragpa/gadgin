@@ -25,7 +25,7 @@
     <!-- Register Form -->
     <div class="form-div">
         <div class="form-div-inner">
-            <form class="login-form" id="form" method="post" action="/api/checkotp?forgotpass=1">
+            <form class="login-form" id="form" method="post" action="/api/checkotp?forgotpass=1" data-pid="/api/checkotp?forgotpass=1">
                 <h3 class="a-center" id="type">Verify OTP</h3>
                 <span class="err-msg align-self-center text-danger" id="errorElement">
                     <% if (messages.error) { %>
@@ -39,10 +39,10 @@
                         <div class="otp-timer" id="otp-timer"></div>
                       
                     </div>
-                    <div class="resendotp " id="resendbutton">
+                    <div class="resendotp deactivated" id="resendbutton">
                
         
-                                <button class="resendotp-btn" id="resendbutton-vb" type="submit">Resendd</button>
+                                <button class="resendotp-btn " id="resendbutton" type="submit">Resend</button>
                     
                             <input type="email" class="form-control d-none" id="email" placeholder="OTP" name="email" value="<%=email%>">
                           
@@ -54,7 +54,7 @@
              
                 <div class="form-group form-check">
                     <div class="a-center">
-                        <button type="submit" class="btn btn-primary" id="continue-btnn">Continue</button>
+                        <button type="submit" class="btn btn-primary" id="continue-btnn" data-pid="/api/checkotp?forgotpass=1">Continue</button>
                     </div>
                 </div>
                 <div class="a-center mt-5">
@@ -72,18 +72,20 @@
 <!-- Footer -->
 <script>
     document.getElementById('continue-btnn').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('form').submit();
+        // e.preventDefault();
+        // document.getElementById('form').submit();
     });
 
-    document.getElementById('resendbutton-vb').addEventListener('click', (event) => {
+    document.getElementById('resendbutton').addEventListener('click', (event) => {
         event.preventDefault();
         document.getElementById('form').action = '/api/getotp?forgotpass=1';
         document.getElementById('form').submit();
     });
 </script>
 <script src="/js/otpvalidation.js"></script>
-<script src="/js/validation.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/otpsubmitAJAX.js"></script>
+<!-- <script src="/js/validation.js"></script> -->
 <!-- <script src="/js/validation.js"></script> -->
 </body>
 

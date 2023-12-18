@@ -7,9 +7,11 @@ const path = require('path')
 const userRoutes = require('./routes/userRoutes')
 const authRoutes = require('./routes/authRoutes')
 const adminRoutes= require('./routes/adminRoutes')
+const apiRoutes= require('./routes/apiRoutes')
 const passport = require('./configs/passport-config');
 const session = require('express-session')
-const flash = require('express-flash')
+const flash = require('express-flash');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 dbConnect();
 
@@ -25,7 +27,7 @@ app.use(passport.session())
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.set('view-engine', 'ejs')
+app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname,'public')))
 app.use(flash())
 app.use((req, res, next) => {
@@ -40,7 +42,10 @@ app.use((req, res, next) => {
 app.use('/',userRoutes)
 app.use('/',authRoutes)
 app.use('/admin',adminRoutes);
+app.use('/api',apiRoutes);
 
+// Error Middleware
+app.use(errorMiddleware);
 
 app.listen(PORT,()=>{
     console.log(`Server running on http://localhost:${PORT}`);
