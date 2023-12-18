@@ -694,7 +694,8 @@ input[type="search"]::-webkit-search-cancel-button {
         min-width: 171px;
     }
     .cart-div {
-        margin-left: 38%
+        margin-left: 35%;
+        gap:0px
     }
 
     /* Single pdt */
