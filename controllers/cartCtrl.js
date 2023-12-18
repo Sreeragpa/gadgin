@@ -2,11 +2,11 @@ const cartDb = require('../models/cartModel');
 const productDb = require('../models/productModel');
 const mongoose = require('mongoose')
 exports.addtoCart = async(req,res)=>{
-    const pid = req.params.id;
-    const userid = req.session.passport.user;
-
+    
     try {
-        // Find the user's cart or create a new one if it doesn't exist
+        const pid = req.params.id;
+        const userid = req.session.passport.user;
+        
         let userCart = await cartDb.findOne({ userid });
 
         if (!userCart) {
@@ -25,7 +25,7 @@ exports.addtoCart = async(req,res)=>{
         
             if (existingCartItem) {
                 if(existingCartItem.quantity!=5){
-                    existingCartItem.quantity += 1;
+                    // existingCartItem.quantity += 1;
                 }
                 
             } else {
@@ -38,11 +38,9 @@ exports.addtoCart = async(req,res)=>{
         }
         // Save the updated cart
         await userCart.save();
-
-        // res.status(200).json({ message: 'Product added to the cart successfully' });
         const referer = req.get('Referer');
         res.redirect(referer);
-        // res.status(200).redirect('/cart')
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -50,9 +48,9 @@ exports.addtoCart = async(req,res)=>{
 }
 
 exports.getCart =async(req,res)=>{
-    const userid = req.params.id;
-
+    
     try {
+        const userid = req.params.id;
         const result = await cartDb.aggregate([
             {
                 $match:{ userid: new mongoose.Types.ObjectId(userid) }
@@ -88,46 +86,80 @@ exports.getCart =async(req,res)=>{
             res.send(message)
         }
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error("Error in getCart:", error);
+        res.status(500).send({ error: "Internal Server Error" });
     }
 }
 
 exports.deleteCartitem =async(req,res)=>{
-    const pid = req.params.id;
-    const userid = req.session.passport.user;
-    const cart = await cartDb.findOne({userid});
-    const todeleteIndex = cart.cartitems.findIndex((value)=>{
-        return value.productid.toString() === pid
-    })
-    if (todeleteIndex !== -1){
-        cart.cartitems.splice(todeleteIndex,1);
-        await cart.save()
-        res.redirect('/cart');
-    }else {
-        return res.status(404).json({ message: 'Item not found in the cart' });
+    try {
+        const pid = req.params.id;
+        const userid = req.session.passport.user;
+        const cart = await cartDb.findOne({userid});
+        const todeleteIndex = cart.cartitems.findIndex((value)=>{
+            return value.productid.toString() === pid
+        })
+        if (todeleteIndex !== -1){
+            cart.cartitems.splice(todeleteIndex,1);
+            await cart.save()
+            res.redirect('/cart');
+        }else {
+            return res.status(404).json({ message: 'Item not found in the cart' });
+        }
+    } catch (error) {
+        console.error("Error in deleteCartitem:", error);
+        res.status(500).send({ error: "Internal Server Error" });
     }
+
 
     
 }
 
 exports.updateQuantity = async(req,res)=>{
-    const pid=req.params.id;
-    const userid=req.session.passport.user;
-    // let myCart = await cartDb.findOne({userid:userid});
-    // carttoUpdate = myCart.cartitems.find((value)=>{
-    //     return value.productid.toString()==pid
-    // })
-    let newQuantity=req.query.qty;
-    // carttoUpdate.quantity = req.body.quantity;
-    // carttoUpdate.quantity = newQuantity;
-    // await myCart.save();
-    
-    const result = await cartDb.findOneAndUpdate(
-        { 'cartitems.productid': pid },
-        { $set: { 'cartitems.$.quantity': newQuantity } },
-        { new: true }
-    );
-  
+    try {
+        const pid=req.params.id;
+        const userid=req.session.passport.user;
+        let newQuantity=req.query.qty;
+        
+        const result = await cartDb.findOneAndUpdate(
+            { 'cartitems.productid': pid },
+            { $set: { 'cartitems.$.quantity': newQuantity } },
+            { new: true }
+        );
+      
+    } catch (error) {
+        console.error("Error in updateQuantity:", error);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
 
+
+}
+
+exports.clearCart = async(req,res)=>{
+    const userid = req.session.passport.user;
+
+    try {
+        const result = await cartDb.findOneAndUpdate({userid:userid},{$unset:{cartitems:""}});
+
+        if(result){
+            res.redirect('/cart');
+        }
+    } catch (error) {
+        console.error("Error in clearCart:", error);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
+}
+
+exports.clearAfterPurchase = async(req,res)=>{
+    const userid = req.query.userid;
+    console.log(userid);
+
+    try {
+        const result = await cartDb.findOneAndUpdate({userid:userid},{$unset:{cartitems:""}});
+        res.status(200).send('Cart cleared successfully');
+
+    } catch (error) {
+        console.error("Error in clearCart:", error);
+        res.status(500).send({ error: "Internal Server Error" });
+    }
 }

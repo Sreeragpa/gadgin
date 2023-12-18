@@ -8,29 +8,36 @@ const Userdb = require('../models/userModel')
 let fpasss;
 exports.getOtp = async (req, res) => {
     const email = req.body.email;
-     fpasss= req.query.forgotpass;
-    console.log(fpasss,email);
-    if (req.query.forgotpass == 1) {
-        const type = 'fpass'
-        req.session.fpass = true;
-        const isUser = await Userdb.findOne({ email: email })
-        if (isUser) {
-            sendEmail(type)
-        } else {
-            req.session.error = true;
-            res.redirect('/forgotpass');
-        }
-    } else {
-        const type = 'newreg'
-        req.session.fpass = false;
-        const isUser = await Userdb.findOne({ email: email })
-        if (isUser) {
-            req.session.error = true;
-            res.redirect('/register');
-        } else {
-            sendEmail(type)
-        }
+    req.session.email = req.body.email;
+    try {
+        fpasss= req.query.forgotpass;
+    //    console.log(fpasss,email);
+       if (req.query.forgotpass == 1) {
+           const type = 'fpass'
+           req.session.fpass = true;
+           const isUser = await Userdb.findOne({ email: email })
+           if (isUser) {
+               sendEmail(type)
+           } else {
+               req.session.error = true;
+               res.redirect('/forgotpass');
+           }
+       } else {
+           const type = 'newreg'
+           req.session.fpass = false;
+           const isUser = await Userdb.findOne({ email: email })
+           if (isUser) {
+               req.session.error = true;
+               res.redirect('/register');
+           } else {
+               sendEmail(type)
+           }
+       }
+    } catch (error) {
+        console.error("Error in getOtp:", error);
+        res.status(500).send({ error: "Internal Server Error" });
     }
+
 
 
 
@@ -99,7 +106,7 @@ exports.getOtp = async (req, res) => {
                 }
                 
                 
-                req.session.email = req.body.email;
+                
                 if(type=='fpass'){
                     res.redirect('/otpregfpass')
                 }else{
@@ -120,9 +127,9 @@ exports.getOtp = async (req, res) => {
 exports.checkOtp = async (req, res) => {
     try {
         let { otp, email } = req.body;
-        if (!otp) {
-            // throw Error("Empty OTP not allowed")
-            res.render('otpreg.ejs', { messages: { error: "Empty OTP not allowed" } })
+        req.session.email=email;
+        if (otp=='') {
+            res.render('otpreg.ejs', { messages: { error: "Empty OTP not allowed" },email:email })
         } else {
             const otpVerify = await Otpdb.findOne({ otp });
             if (otpVerify) {
@@ -142,9 +149,11 @@ exports.checkOtp = async (req, res) => {
 
                 } else if (savedOtp == otp) {
                     if (fpasss==1) {
-                        res.render('newpass.ejs', { email: email })
+                        // res.render('newpass.ejs', { email: email })
+                        res.redirect('/changepassword')
                     } else {
-                        res.render('finalreg.ejs', { email: email })
+                        // res.render('finalreg.ejs', { email: email })
+                        res.redirect('/newaccount')
                     }
                 }
 
@@ -153,7 +162,8 @@ exports.checkOtp = async (req, res) => {
             }
         }
     } catch (err) {
-        res.json({ err });
+        console.error("Error in checkOtp:", error);
+        res.status(500).send({ error: "Internal Server Error" });
     }
 }
 

@@ -26,6 +26,9 @@ var userSchema = new mongoose.Schema({
     status:{
         type:String,
         default:'inactive'
+    },
+    profileimg:{
+        type:String,
     }
 })
 

@@ -42,6 +42,10 @@ var userSchema = new mongoose.Schema({
             type: String,
         }
     ],
+    unlisted:{
+        type:Boolean,
+        default:false,
+    }
 
 
 })
