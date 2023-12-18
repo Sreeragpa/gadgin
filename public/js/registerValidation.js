@@ -20,10 +20,10 @@ form.addEventListener('submit',(e)=>{
         flag=1;
         document.getElementById('phone-error').innerHTML="Phone Required";
     }
-    if(password!=1 && password.value.length!=6){
-        flag=1;
-        document.getElementById('pass-error').innerHTML="Password should be 6 characters";
-    }
+    // if(password!=1 && password.value.length!=6){
+    //     flag=1;
+    //     document.getElementById('pass-error').innerHTML="Password should be 6 characters";
+    // }
     if(confirmpassword!=1 && confirmpassword.value!=password.value){
         flag=1;
         document.getElementById('passmatch-error').innerHTML="Password doesnt Match";

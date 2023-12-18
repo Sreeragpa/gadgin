@@ -82,6 +82,7 @@ body {
 	border-radius: 4px;
 	cursor: pointer;
   }
+  
 /* / Overlay modal */
 
 /* Image Preview */
@@ -644,7 +645,10 @@ body {
 	width: 20%;
 }
 /* /Form */
-
+.order-item-card-one-images{
+    width: 120px;
+    /* background-color: aqua; */
+}
 /* User Management */
 .block-btnn{
 	background-color: rgb(0, 0, 0);
@@ -683,6 +687,46 @@ body {
 	background-color: #4caf50;
   }
 /* /User Management */
+
+/* Order Management */
+
+.change-orderstatus-button{
+	background-color: #060714;
+	color: white;
+	padding: 4px 8px;
+	border-radius: 8px;
+	font-weight: 500;
+}
+
+/* / Order Management */
+
+/* Ordermgmt Single */
+.order-items{
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+.order-item-card{
+	display: flex;
+	justify-content: space-between;
+	background-color: #e2e2e2;
+	border-radius: 12px;
+	
+}
+.order-item-card-one{
+	display: flex;
+}
+
+.order-details-u-k{
+	padding: 12px;
+	background-color: #e2e2e2;
+	border-radius: 12px;
+}
+.order-items{
+	margin-top: 12px;
+}
+
+/* Ordermgmt Single */
 
 
 

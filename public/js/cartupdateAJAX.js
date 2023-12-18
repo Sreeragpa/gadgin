@@ -17,9 +17,6 @@ $(document).ready(function () {
                 url: `${href}?qty=${quantity}`,
                 type: 'POST',
                 success: function (data) {
-                    // Replace the content of the main element with the loaded data
-                    // var content = $(data).find('#main-content').html();
-                    // $('#main-content').html(content);
                     console.log('Success');
                 },
                 error: function () {

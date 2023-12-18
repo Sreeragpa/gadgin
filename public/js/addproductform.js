@@ -47,6 +47,10 @@ const pname = document.getElementById('pname')
       console.log(Number(mrp.value));
       document.getElementById('mrp-error').innerHTML='MRP should be greater than zero';
     }
+    if(Number(mrp.value)<Number(price.value)){
+      flag=1; 
+      document.getElementById('mrp-error').innerHTML='MRP should be greater than Price';
+    }
     if(color.value==='' || color.value===null){
       flag=1;
       document.getElementById('color-error').innerHTML='Color is required';
@@ -126,7 +130,7 @@ document.getElementById('img-input').addEventListener('change', function (e) {
 });
 
 
-quantity=document.getElementById('quantity').value;
+let quantity1=document.getElementById('quantity').value;
 
 if(quantity<=0 || quantity==null){
     document.getElementById('quantity').value=1;

@@ -22,10 +22,10 @@ function callme(){
         const discountElement = document.querySelectorAll('#discountp');
         discount+= Number(discountElement[index].value)
     })
-    document.getElementById('totalmrp').innerHTML = mrp;
-    document.getElementById('discount').innerHTML = mrp-price;
+    document.getElementById('totalmrp').innerHTML = mrp.toLocaleString('en-IN');
+    document.getElementById('discount').innerHTML = (mrp-price).toLocaleString('en-IN');
     // document.getElementById('discountpercentage').innerHTML = discount;
-    document.getElementById('total').innerHTML = price;
+    document.getElementById('total').innerHTML = price.toLocaleString('en-IN');
     document.getElementById('count').innerHTML = count;
 
 }

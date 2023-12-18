@@ -4,10 +4,16 @@
     background-color: 1C1C1C;
     box-sizing: border-box;
     width: 100%;
+    position: relative;
     
 }
 body{
     background-color: black;
+}
+.user-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .main-div{
     width: 100%;
@@ -23,10 +29,49 @@ body{
     width: 50%;
 }
 .user-profile-details{
+    display: flex;
     background-color: black;
     border-radius: 20px;
     padding: 30px;
     width: 100%;
+}
+.useredit-content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+
+.profile-image{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+.profile-image-div{
+    position: relative;
+    /* width: 30%; */
+}
+.profile-image-user-edit{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+.edit-profile{
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.526);
+    mix-blend-mode: darken;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    opacity: 0;
+   
+}
+.profile-image-div:hover .edit-profile {
+    opacity: 1; 
 }
 .user-manage{
     display:flex;
@@ -60,6 +105,12 @@ ul {
     align-items: center;
     justify-content: center;
     margin: 10px;
+}
+.pass-div{
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+    gap: 4px;
 }
 
 @media(max-width:954px) {
@@ -103,6 +154,24 @@ ul {
     li{
         font-size: 12px;
     }
+    .useredit-content{
+        justify-content: center;
+        align-items: center;
+    }
+    .profile-image-div{
+        display: flex;
+        justify-content: center;
+    }
+
 
  
 }
+
+@media(max-width:360px){
+    .pass-div{
+        flex-direction: column;
+    }
+    #changepass-btn{
+        width: 80px;
+    }
+}       
