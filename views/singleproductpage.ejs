@@ -59,11 +59,11 @@
                 <div>
                     <%if(isInCart==null){%>
                         <form action="/api/user/addtocart/<%=product._id%>" method="post">
-                            <button class="addtocart bold-500" type="submit" id="<%=(product.quantity<=0)?"preventbtn":""%>"> Add to Cart</button>
+                            <button class="addtocart bold-500 text-black" type="submit" id="<%=(product.quantity<=0)?"preventbtn":""%>"> Add to Cart</button>
                         </form>
                     <%}else{%>
                         <form action="/cart" method="get">
-                        <button class="addtocart bold-500" type="submit"> Go to Cart</button>
+                        <button class="addtocart bold-500 text-black" type="submit"> Go to Cart</button>
                     </form>
                     <%}%>
                 </div>
